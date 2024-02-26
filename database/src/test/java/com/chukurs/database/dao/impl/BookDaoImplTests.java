@@ -1,7 +1,5 @@
 package com.chukurs.database.dao.impl;
 
-import com.chukurs.database.dao.impl.AuthorDaoImpl;
-import com.chukurs.database.dao.impl.BookDaoImpl;
 import com.chukurs.database.domain.Author;
 import com.chukurs.database.domain.Book;
 import org.junit.jupiter.api.Test;
@@ -12,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -25,15 +26,11 @@ public class BookDaoImplTests {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSql() {
-        Book book = Book.builder()
-                .isbn("1234-5678-9098-7654")
-                .title("The shadow in the attic")
-                .authorId(1L)
-                .build();
+        Book book = TestDataUtil.createTestBookA();
         underTest.create(book);
         verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn,title,authorId) VALUES (?,?,?)"),
-                eq("1234-5678-9098-7654"), eq("The shadow in the attic"), eq(1L));
+                eq("1234-5678-9098-1"), eq("The shadow in the attic A"), eq(1L));
 
     }
 
@@ -47,4 +44,14 @@ public class BookDaoImplTests {
                 eq("123-456"));
 
     }
+
+    public void testThatFindBookGeneratesCorrectSql() {
+        //as we get results FROM database, we need to map them to objects. (DAO pattern requires this, JPA would do it for us)
+        underTest.find();
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn,title,authorId FROM books "),
+                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any());
+
+    }
+
 }

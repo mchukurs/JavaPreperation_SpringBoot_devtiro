@@ -1,6 +1,5 @@
 package com.chukurs.database.dao.impl;
 
-import com.chukurs.database.dao.impl.AuthorDaoImpl;
 import com.chukurs.database.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -23,11 +21,7 @@ public class AuthorDaoImplTests {
 
     @Test
     public void testThatCreateAuthorGeneratesCorrectSql() {
-        Author author = Author.builder()
-                .id(1L)
-                .name("Abigail Rose")
-                .age(80)
-                .build();
+        Author author = TestDataUtil.createTestAuthorA();
         underTest.create(author);
         verify(jdbcTemplate).update(
                 eq("INSERT INTO authors (id,name,age) VALUES (?,?,?)"),
@@ -43,6 +37,17 @@ public class AuthorDaoImplTests {
                 eq("SELECT id,name,age FROM authors WHERE id  = (?) LIMIT 1"),
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
                 eq(1L));
+
+    }
+
+    @Test
+    public void testThatFindManyGeneratesCorrectSql() {
+        //as we get results FROM database, we need to map them to objects. (DAO pattern requires this, JPA would do it for us)
+        underTest.find();
+        verify(jdbcTemplate).query(
+                eq("SELECT id,name,age FROM authors"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+                );
 
     }
 }
