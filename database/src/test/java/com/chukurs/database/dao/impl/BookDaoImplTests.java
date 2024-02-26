@@ -6,6 +6,7 @@ import com.chukurs.database.domain.Author;
 import com.chukurs.database.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,6 +34,17 @@ public class BookDaoImplTests {
         verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn,title,authorId) VALUES (?,?,?)"),
                 eq("1234-5678-9098-7654"), eq("The shadow in the attic"), eq(1L));
+
+    }
+
+    @Test
+    public void testThatFindOneBookGeneratesCorrectSql() {
+        //as we get results FROM database, we need to map them to objects. (DAO pattern requires this, JPA would do it for us)
+        underTest.findOne("123-456");
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn,title,authorId FROM books WHERE isbn  = (?) LIMIT 1"),
+                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
+                eq("123-456"));
 
     }
 }
