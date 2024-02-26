@@ -1,4 +1,4 @@
-package com.chukurs.database.dao;
+package com.chukurs.database.dao.impl;
 
 import com.chukurs.database.dao.impl.AuthorDaoImpl;
 import com.chukurs.database.dao.impl.BookDaoImpl;
