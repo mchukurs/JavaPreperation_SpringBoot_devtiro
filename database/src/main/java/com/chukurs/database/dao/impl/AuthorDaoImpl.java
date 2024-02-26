@@ -22,7 +22,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public void create(Author author) {
-        jdbcTemplate.update("INSERT INTO authors (id,name,age) VALUES (?,?,?)",
+        jdbcTemplate.update("INSERT INTO authors (id, name, age) VALUES (?,?,?)",
                 author.getId(),
                 author.getName(),
                 author.getAge());
@@ -43,6 +43,15 @@ public class AuthorDaoImpl implements AuthorDao {
                 "SELECT id,name,age FROM authors",
                 new AuthorRowMapper());
         return results;
+    }
+
+    @Override
+    public void update(Long id,Author authorA) {
+        jdbcTemplate.update("UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
+                authorA.getId(),
+                authorA.getName(),
+                authorA.getAge(),
+               id);
     }
 
     public static class AuthorRowMapper implements RowMapper<Author> {

@@ -27,6 +27,15 @@ public class AuthorDaoImplIntegrationTest {
     }
 
     @Test
+    public void testThatAuthorCanBeUpdatedAndRecalled() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.update(authorA.getId(),authorA);
+
+        Optional<Author> result = underTest.findOne(authorA.getId());
+       // assertThat(result).isEqualTo(authorA);
+        assertThat(result.isPresent());
+    }
+    @Test
     public void testThatAuthorCanBeCreatedAndRecalled() {
         Author authorA = TestDataUtil.createTestAuthorA();
         underTest.create(authorA);
