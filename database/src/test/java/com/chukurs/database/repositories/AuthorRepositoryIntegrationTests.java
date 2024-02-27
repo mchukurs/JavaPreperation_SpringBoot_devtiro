@@ -27,25 +27,25 @@ public class AuthorRepositoryIntegrationTests {
         this.underTest = underTest;
     }
 
-//    @Test
-//    public void testThatAuthorCanBeDeletedAndRecalledEmpty() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.delete(authorA.getId());
-//
-//        Optional<Author> result = underTest.findOne(authorA.getId());
-//        // assertThat(result).isEqualTo(authorA);
-//        assertThat(result.isEmpty());
-//    }
-//
-//    @Test
-//    public void testThatAuthorCanBeUpdatedAndRecalled() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.update(authorA.getId(), authorA);
-//
-//        Optional<Author> result = underTest.findOne(authorA.getId());
-//        // assertThat(result).isEqualTo(authorA);
-//        assertThat(result.isPresent());
-//    }
+    @Test
+    public void testThatAuthorCanBeDeletedAndRecalledEmpty() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.deleteById(authorA.getId());
+
+        Optional<Author> result = underTest.findById(authorA.getId());
+        // assertThat(result).isEqualTo(authorA);
+        assertThat(result.isEmpty());
+    }
+
+    @Test
+    public void testThatAuthorCanBeUpdatedAndRecalled() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.save(authorA);
+
+        Optional<Author> result = underTest.findById(authorA.getId());
+        // assertThat(result).isEqualTo(authorA);
+        assertThat(result.isPresent());
+    }
 
     @Test
     public void testThatAuthorCanBeCreatedAndRecalled() {
@@ -60,28 +60,28 @@ public class AuthorRepositoryIntegrationTests {
 
 
     }
-//
-//    @Test
-//    public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        Author authorB = TestDataUtil.createTestAuthorB();
-//        Author authorC = TestDataUtil.createTestAuthorC();
-//        Author authorD = TestDataUtil.createTestAuthorD();
-//
-//        underTest.create(authorA);
-//        underTest.create(authorB);
-//        underTest.create(authorC);
-//        underTest.create(authorD);
-//
-//
-//        List<Author> result = underTest.find();
-//        assertThat(result).hasSize(4);
-//
-//
-//        assertThat(result).containsExactly(authorA, authorB, authorC, authorD);
-//
-//
-//    }
+
+    @Test
+    public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        Author authorB = TestDataUtil.createTestAuthorB();
+        Author authorC = TestDataUtil.createTestAuthorC();
+        Author authorD = TestDataUtil.createTestAuthorD();
+
+        underTest.save(authorA);
+        underTest.save(authorB);
+        underTest.save(authorC);
+        underTest.save(authorD);
+
+
+        Iterable<Author> result = underTest.findAll();
+        assertThat(result).hasSize(4);
+
+
+        assertThat(result).containsExactly(authorA, authorB, authorC, authorD);
+
+
+    }
 
 
 }
