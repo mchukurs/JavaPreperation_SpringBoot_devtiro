@@ -22,9 +22,18 @@ public class AuthorDaoImplTests {
     private AuthorDaoImpl underTest;
 
     @Test
+    public void testThatDeleteAuthorGeneratesCorrectSql() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.delete(authorA.getId());
+        verify(jdbcTemplate).update(
+                "DELETE FROM authors WHERE id = ?",
+                1L);
+    }
+
+    @Test
     public void testThatUpdateAuthorGeneratesCorrectSql() {
         Author authorA = TestDataUtil.createTestAuthorA();
-        underTest.update(authorA.getId(),authorA);
+        underTest.update(authorA.getId(), authorA);
         verify(jdbcTemplate).update(
                 "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
                 1L, "Abigail Rose A", 81, 1L);

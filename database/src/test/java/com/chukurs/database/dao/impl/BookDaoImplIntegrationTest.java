@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -27,6 +29,14 @@ public class BookDaoImplIntegrationTest {
     public BookDaoImplIntegrationTest(BookDaoImpl underTest, AuthorDao authorDao) {
         this.underTest = underTest;
         this.authorDao = authorDao;
+    }
+    @Test
+    public void testThatBookCanBeDeletedAndRecalledEmpty() {
+        Book bookA = TestDataUtil.createTestBookA();
+        underTest.delete(bookA.getIsbn());
+
+        Optional<Book> result = underTest.findOne(bookA.getIsbn());
+        assertThat(result.isEmpty());
     }
     @Test
     public void testThatBookCanBeUpdatedAndRecalled() {

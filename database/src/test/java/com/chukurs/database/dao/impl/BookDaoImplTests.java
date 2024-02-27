@@ -24,7 +24,15 @@ public class BookDaoImplTests {
     private JdbcTemplate jdbcTemplate;
     @InjectMocks
     private BookDaoImpl underTest;
+    @Test
+    public void testThatDeleteBookGeneratesCorrectSql() {
+        Book bookA = TestDataUtil.createTestBookA();
+        underTest.delete(bookA.getIsbn());
+        verify(jdbcTemplate).update(
+                "DELETE FROM books WHERE isbn = ?",
+                "1234-5678-9098-1");
 
+    }
     @Test
     public void testThatUpdateBookGeneratesCorrectSql() {
         Book bookA = TestDataUtil.createTestBookA();
