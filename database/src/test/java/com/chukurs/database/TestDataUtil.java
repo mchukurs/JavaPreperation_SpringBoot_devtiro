@@ -1,48 +1,48 @@
-//package com.chukurs.database;
-//
-//import com.chukurs.database.domain.Author;
-//import com.chukurs.database.domain.Book;
-//
-//public final class TestDataUtil {
-//    private TestDataUtil() {
-//
-//    }
-//
-//
-//    public static Author createTestAuthorA() {
-//        return Author.builder()
-//                .id(1L)
-//                .name("Abigail Rose A")
-//                .age(81)
-//                .build();
-//    }
-//
-//    public static Author createTestAuthorB() {
-//        return Author.builder()
-//                .id(2L)
-//                .name("Abigail Rose B")
-//                .age(82)
-//                .build();
-//    }
-//
-//    public static Author createTestAuthorC() {
-//        return Author.builder()
-//                .id(3L)
-//                .name("Abigail Rose C")
-//                .age(83)
-//                .build();
-//    }
-//
-//    public static Author createTestAuthorD() {
-//        return Author.builder()
-//                .id(4L)
-//                .name("Abigail Rose D")
-//                .age(84)
-//                .build();
-//    }
-//    //
-//    //
-//    //
+package com.chukurs.database;
+
+import com.chukurs.database.domain.Author;
+import com.chukurs.database.domain.Book;
+
+public final class TestDataUtil {
+    private TestDataUtil() {
+
+    }
+
+
+    public static Author createTestAuthorA() {
+        return Author.builder()
+                .id(1L)
+                .name("Abigail Rose A")
+                .age(81)
+                .build();
+    }
+
+    public static Author createTestAuthorB() {
+        return Author.builder()
+                .id(2L)
+                .name("Abigail Rose B")
+                .age(82)
+                .build();
+    }
+
+    public static Author createTestAuthorC() {
+        return Author.builder()
+                .id(3L)
+                .name("Abigail Rose C")
+                .age(83)
+                .build();
+    }
+
+    public static Author createTestAuthorD() {
+        return Author.builder()
+                .id(4L)
+                .name("Abigail Rose D")
+                .age(84)
+                .build();
+    }
+    //
+    //
+    //
 //
 //    public static Book createTestBookA() {
 //        return Book.builder()
@@ -75,4 +75,4 @@
 //                .authorId(4L)
 //                .build();
 //    }
-//}
+}
